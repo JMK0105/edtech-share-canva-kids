@@ -19,16 +19,29 @@ def summarize_text_to_slides(text, instruction):
 
 def parse_structured_slides(gpt_response):
     slides = []
+    title_kr_global = ""
+    title_en_global = ""
     slide_blocks = gpt_response.strip().split("[슬라이드")
     for block in slide_blocks[1:]:
-        title, content, keywords = "", "", ""
+        title_kr, title_en, content, keywords = "", "", "", ""
         lines = block.splitlines()
         for line in lines:
             if line.startswith("제목:"):
-                title = line.replace("제목:", "").strip()
+                title_kr = line.replace("제목:", "").strip()
+                if not title_kr_global:
+                    title_kr_global = title_kr
+            elif line.startswith("영문제목:"):
+                title_en = line.replace("영문제목:", "").strip()
+                if not title_en_global:
+                    title_en_global = title_en
             elif line.startswith("내용:"):
                 content = line.replace("내용:", "").strip()
             elif line.startswith("키워드:"):
                 keywords = line.replace("키워드:", "").strip()
-        slides.append({"title": title, "content": content, "keywords": keywords})
+        slides.append({
+            "title_kr": title_kr_global,
+            "title_en": title_en_global,
+            "content": content,
+            "keywords": keywords
+        })
     return slides
