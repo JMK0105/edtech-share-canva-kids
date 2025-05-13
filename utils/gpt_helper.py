@@ -6,7 +6,7 @@ client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 def summarize_text_to_slides(text, instruction):
     messages = [
-        {"role": "system", "content": "당신은 발표 슬라이드를 구조화하는 전문가입니다."},
+        {"role": "system", "content": "당신은 교육 세션, 리더십 개발, 조직성과 분석 등 전문 주제를 발표 슬라이드로 설계하는 교육 콘텐츠 디자이너입니다."},
         {"role": "user", "content": f"{instruction}\n\n{text}"}
     ]
     response = client.chat.completions.create(
