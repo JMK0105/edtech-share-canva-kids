@@ -4,8 +4,12 @@ from pptx.enum.text import MSO_AUTO_SIZE
 
 def replace_text_preserve_style(text_frame, new_text):
     new_text = new_text.replace("\\n", "\n")
-    text_frame.clear()  # 기존 텍스트 제거
-    for line in new_text.split("\n"):
+    text_frame.clear()
+    lines = new_text.split("\n")
+    if not lines:
+        return
+    text_frame.text = lines[0].strip()
+    for line in lines[1:]:
         p = text_frame.add_paragraph()
         p.text = line.strip()
     text_frame.auto_size = MSO_AUTO_SIZE.TEXT_TO_FIT_SHAPE
