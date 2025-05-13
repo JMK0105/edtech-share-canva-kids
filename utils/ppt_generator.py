@@ -21,30 +21,29 @@ def wrap_text(text, max_length=50):
 
 
 def replace_text_preserve_style(text_frame, new_text, max_length=50):
-    """
-    텍스트 박스의 기존 스타일을 유지하면서 텍스트를 줄바꿈 포함 입력
-    """
-    lines = wrap_text(new_text, max_length=max_length)
+    # 줄바꿈 기준 분리 (GPT가 '\\n'으로 줄을 구분하는 경우가 많음)
+    lines = new_text.split("\\n")
+    lines = [line.strip() for line in lines if line.strip()]
     if not lines:
         return
 
-    # 기존 스타일 백업 (첫 문단의 첫 run 기준)
+    # 기존 스타일 백업
     template_run = None
     template_align = None
     if text_frame.paragraphs and text_frame.paragraphs[0].runs:
         template_run = text_frame.paragraphs[0].runs[0]
         template_align = text_frame.paragraphs[0].alignment
 
-    # 기존 텍스트 제거 (스타일도 제거됨)
+    # 기존 텍스트 제거
     text_frame.clear()
 
+    # 첫 문단에 직접 삽입 (불필요한 비어있는 문단 남기지 않기 위해)
     for i, line in enumerate(lines):
         p = text_frame.add_paragraph()
-        p.alignment = template_align or None  # 기존 정렬 유지
+        p.alignment = template_align or None
         run = p.add_run()
         run.text = line
 
-        # 기존 스타일 복사
         if template_run:
             run.font.name = template_run.font.name
             run.font.size = template_run.font.size or Pt(18)
@@ -57,9 +56,8 @@ def replace_text_preserve_style(text_frame, new_text, max_length=50):
                 pass
 
         if i > 0:
-            p.space_before = Pt(6)  # 문단 간 간격 설정
+            p.space_before = Pt(6)
 
-    # 텍스트 자동 줄바꿈과 크기 조정
     text_frame.word_wrap = True
     text_frame.auto_size = MSO_AUTO_SIZE.TEXT_TO_FIT_SHAPE
 
