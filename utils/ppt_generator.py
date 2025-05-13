@@ -1,6 +1,15 @@
 # 📁 utils/ppt_generator.py
 from pptx import Presentation
 
+def replace_text_preserve_style(text_frame, new_text):
+    if not text_frame.paragraphs:
+        return
+    para = text_frame.paragraphs[0]
+    if para.runs:
+        para.runs[0].text = new_text
+    else:
+        para.add_run().text = new_text
+
 def insert_structured_content(template_path, structured_slides):
     prs = Presentation(template_path)
 
@@ -17,11 +26,11 @@ def insert_structured_content(template_path, structured_slides):
             if not shape.has_text_frame:
                 continue
             if shape.name == "TitleKRBox":
-                shape.text_frame.text = title_kr
+                replace_text_preserve_style(shape.text_frame, title_kr)
             elif shape.name == "TitleENBox":
-                shape.text_frame.text = title_en
+                replace_text_preserve_style(shape.text_frame, title_en)
             elif shape.name == "BodyBox":
-                shape.text_frame.text = content
+                replace_text_preserve_style(shape.text_frame, content)
             elif shape.name == "KeywordBox":
-                shape.text_frame.text = keywords
+                replace_text_preserve_style(shape.text_frame, keywords)
     return prs
