@@ -30,14 +30,17 @@ def replace_text_preserve_style(text_frame, new_text, max_length=50):
 
     # 기존 스타일 백업 (첫 문단의 첫 run 기준)
     template_run = None
+    template_align = None
     if text_frame.paragraphs and text_frame.paragraphs[0].runs:
         template_run = text_frame.paragraphs[0].runs[0]
+        template_align = text_frame.paragraphs[0].alignment
 
     # 기존 텍스트 제거 (스타일도 제거됨)
     text_frame.clear()
 
     for i, line in enumerate(lines):
         p = text_frame.add_paragraph()
+        p.alignment = template_align or None  # 기존 정렬 유지
         run = p.add_run()
         run.text = line
 
@@ -48,7 +51,7 @@ def replace_text_preserve_style(text_frame, new_text, max_length=50):
             run.font.bold = template_run.font.bold
             run.font.italic = template_run.font.italic
             try:
-                if template_run.font.color.type == 1:
+                if template_run.font.color and template_run.font.color.type == 1:
                     run.font.color.rgb = template_run.font.color.rgb
             except Exception:
                 pass
@@ -56,9 +59,9 @@ def replace_text_preserve_style(text_frame, new_text, max_length=50):
         if i > 0:
             p.space_before = Pt(6)  # 문단 간 간격 설정
 
-    # 자동 크기 조정 + 줄바꿈 허용
-    text_frame.auto_size = MSO_AUTO_SIZE.TEXT_TO_FIT_SHAPE
+    # 텍스트 자동 줄바꿈과 크기 조정
     text_frame.word_wrap = True
+    text_frame.auto_size = MSO_AUTO_SIZE.TEXT_TO_FIT_SHAPE
 
 
 def insert_structured_content(template_path, structured_slides):
