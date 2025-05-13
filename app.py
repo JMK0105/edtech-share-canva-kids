@@ -12,7 +12,7 @@ st.title("🧠 GPT 기반 발표 슬라이드 자동 생성")
 pdf_file = st.file_uploader("📄 세션 PDF 파일 업로드", type="pdf")
 template_path = "templates/atd_template.pptx"
 prompt_input = st.text_area("✍️ GPT 프롬프트", """
-PDF 전체 내용을 바탕으로 6~8장의 발표 슬라이드를 구성해주세요.
+PDF 전체 내용을 바탕으로 8~10장의 발표 슬라이드를 구성해주세요.
 
 - '제목'과 '영문제목'은 모든 슬라이드에서 동일합니다 (국문/영문 세션 제목).
 - 각 슬라이드의 '키워드'는 해당 슬라이드의 주제를 소제목 형태로 작성해주세요. (예: ROI 방법론을 통한 단계별 목표수립 과정)
