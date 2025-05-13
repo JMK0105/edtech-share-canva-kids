@@ -30,3 +30,4 @@ if st.button("🔄 슬라이드 생성") and pdf_file:
     st.success("✅ 슬라이드 생성 완료!")
     with open(output_path, "rb") as f:
         st.download_button("📥 PPTX 파일 다운로드", f, file_name="ATD_Debriefing.pptx")
+
