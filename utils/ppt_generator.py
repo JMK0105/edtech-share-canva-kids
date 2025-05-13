@@ -1,7 +1,9 @@
 # 📁 utils/ppt_generator.py
 from pptx import Presentation
+from pptx.enum.text import MSO_AUTO_SIZE
 
 def replace_text_preserve_style(text_frame, new_text):
+    new_text = new_text.replace("\\n", "\n")
     if not text_frame.paragraphs:
         return
     para = text_frame.paragraphs[0]
@@ -9,6 +11,10 @@ def replace_text_preserve_style(text_frame, new_text):
         para.runs[0].text = new_text
     else:
         para.add_run().text = new_text
+
+    # 자동 박스 확장 설정
+    text_frame.auto_size = MSO_AUTO_SIZE.TEXT_TO_FIT_SHAPE
+
 
 def insert_structured_content(template_path, structured_slides):
     prs = Presentation(template_path)
