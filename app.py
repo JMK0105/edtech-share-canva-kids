@@ -11,16 +11,8 @@ st.title("🧠 GPT 기반 발표 슬라이드 자동 생성")
 
 pdf_file = st.file_uploader("📄 세션 PDF 파일 업로드", type="pdf")
 template_path = "templates/atd_template.pptx"
-prompt_input = st.text_area("✍️ GPT 프롬프트", "다음 세션 요약 내용을 기반으로 8~10장의 발표 슬라이드를 작성해주세요.
-
-각 슬라이드는 다음 형식으로 출력해주세요:
-
-[슬라이드 1]  
-제목: 세션의 핵심 내용을 한국어로 요약한 제목  
-영문제목: 세션의 원문 제목  
-내용: 발표에 사용할 1~2문단 분량의 설명  
-키워드: 소제목
-")
+prompt_input = st.text_area("✍️ GPT 프롬프트", "PDF 내용을 바탕으로 6~8장의 발표 슬라이드를 구성해주세요. 각 슬라이드는 다음 형식으로 출력해주세요: [슬라이드 N]\n제목: ...\n영문제목: ...\n내용: ...\n키워드: ..."
+)
 
 if st.button("🔄 슬라이드 생성") and pdf_file:
     with tempfile.NamedTemporaryFile(delete=False) as tmp:
