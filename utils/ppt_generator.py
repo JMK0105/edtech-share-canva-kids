@@ -4,42 +4,36 @@ from pptx.dml.color import RGBColor
 from pptx.util import Pt
 
 
-def replace_text_preserve_style(text_frame, new_text, max_length=50):
-    """
-    텍스트 박스에 줄바꿈과 스타일을 유지하며 텍스트를 삽입합니다.
-    - GPT 응답 내 '\\n'을 기준으로 문장을 나누고,
-    - 템플릿의 스타일(run)이 존재하지 않을 경우 fallback 기본값을 적용합니다.
-    """
-
-    # ✅ fallback 기본 스타일 설정 (run이 없을 경우)
+def replace_text_preserve_style(text_frame, new_text):
     DEFAULT_FONT_NAME = "맑은 고딕"
     DEFAULT_FONT_SIZE = Pt(16)
     DEFAULT_FONT_COLOR = RGBColor(0, 0, 0)
 
-    # ✅ \n → \\n 통일 후 줄 나누기
+    # 줄바꿈 문자열 처리
     lines = new_text.replace("\n", "\\n").split("\\n")
-    lines = [line.strip() for line in lines if line.strip()]  # 빈 줄 제거
+    lines = [line.strip() for line in lines if line.strip()]
     if not lines:
         lines = ["(내용 없음)"]
 
-    # ✅ 기존 스타일 백업
+    # 기존 스타일 추출
     template_run = None
     template_align = None
     if text_frame.paragraphs and text_frame.paragraphs[0].runs:
         template_run = text_frame.paragraphs[0].runs[0]
         template_align = text_frame.paragraphs[0].alignment
 
-    # ✅ 기존 텍스트 제거
+    # 기존 텍스트 제거 (빈 문단 하나는 자동 생성됨)
     text_frame.clear()
+    first_paragraph = text_frame.paragraphs[0]
 
-    # ✅ 줄별로 문단 생성
     for i, line in enumerate(lines):
-        p = text_frame.add_paragraph()
+        # 첫 줄은 기존 paragraph 사용
+        p = first_paragraph if i == 0 else text_frame.add_paragraph()
         p.alignment = template_align or None
         run = p.add_run()
         run.text = line
 
-        # ✅ 스타일 복사 또는 기본 스타일 적용
+        # 스타일 복사 또는 fallback
         if template_run:
             run.font.name = template_run.font.name
             run.font.size = template_run.font.size or DEFAULT_FONT_SIZE
@@ -60,9 +54,9 @@ def replace_text_preserve_style(text_frame, new_text, max_length=50):
         if i > 0:
             p.space_before = Pt(6)
 
-    # ✅ 텍스트박스 줄바꿈 및 크기 자동 조정
     text_frame.word_wrap = True
     text_frame.auto_size = MSO_AUTO_SIZE.TEXT_TO_FIT_SHAPE
+
 
 
 def insert_structured_content(template_path, structured_slides):
