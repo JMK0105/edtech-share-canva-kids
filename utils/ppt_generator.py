@@ -5,29 +5,22 @@ from pptx.util import Pt
 import textwrap
 
 
-def wrap_text(text, max_length=50):
-    """
-    주어진 텍스트를 max_length 기준으로 줄바꿈 삽입
-    """
-    wrapped_lines = []
-    for paragraph in text.split("\n"):
-        paragraph = paragraph.strip()
-        if paragraph:
-            wrapped = textwrap.wrap(paragraph, width=max_length)
-            wrapped_lines.extend(wrapped)
-        else:
-            wrapped_lines.append("")  # 빈 줄 유지
-    return wrapped_lines
-
-
 def replace_text_preserve_style(text_frame, new_text, max_length=50):
-    # 줄바꿈 기준 분리 (GPT가 '\\n'으로 줄을 구분하는 경우가 많음)
-    lines = new_text.split("\\n")
+    """
+    텍스트를 슬라이드 텍스트 상자에 입력하되, 줄바꿈, 스타일, 위치, 색상 등을 모두 유지합니다.
+    """
+    # 기본 스타일 정의 (run이 존재하지 않을 경우 fallback용)
+    DEFAULT_FONT_NAME = "맑은 고딕"
+    DEFAULT_FONT_SIZE = Pt(16)
+    DEFAULT_FONT_COLOR = RGBColor(0, 0, 0)
+
+    # \n → \\n 통일 후 줄 나누기
+    lines = new_text.replace("\n", "\\n").split("\\n")
     lines = [line.strip() for line in lines if line.strip()]
     if not lines:
         return
 
-    # 기존 스타일 백업
+    # 기존 스타일 백업 (첫 문단의 첫 run 기준)
     template_run = None
     template_align = None
     if text_frame.paragraphs and text_frame.paragraphs[0].runs:
@@ -37,23 +30,30 @@ def replace_text_preserve_style(text_frame, new_text, max_length=50):
     # 기존 텍스트 제거
     text_frame.clear()
 
-    # 첫 문단에 직접 삽입 (불필요한 비어있는 문단 남기지 않기 위해)
+    # 줄별로 문단 + run 삽입
     for i, line in enumerate(lines):
         p = text_frame.add_paragraph()
         p.alignment = template_align or None
         run = p.add_run()
         run.text = line
 
+        # 스타일 복사 또는 기본 적용
         if template_run:
             run.font.name = template_run.font.name
-            run.font.size = template_run.font.size or Pt(18)
+            run.font.size = template_run.font.size or DEFAULT_FONT_SIZE
             run.font.bold = template_run.font.bold
             run.font.italic = template_run.font.italic
             try:
                 if template_run.font.color and template_run.font.color.type == 1:
                     run.font.color.rgb = template_run.font.color.rgb
-            except Exception:
-                pass
+                else:
+                    run.font.color.rgb = DEFAULT_FONT_COLOR
+            except:
+                run.font.color.rgb = DEFAULT_FONT_COLOR
+        else:
+            run.font.name = DEFAULT_FONT_NAME
+            run.font.size = DEFAULT_FONT_SIZE
+            run.font.color.rgb = DEFAULT_FONT_COLOR
 
         if i > 0:
             p.space_before = Pt(6)
@@ -64,7 +64,7 @@ def replace_text_preserve_style(text_frame, new_text, max_length=50):
 
 def insert_structured_content(template_path, structured_slides):
     """
-    지정된 템플릿에 structured_slides 내용을 삽입
+    템플릿 파일을 불러와 슬라이드에 structured_slides 내용을 삽입합니다.
     """
     prs = Presentation(template_path)
 
