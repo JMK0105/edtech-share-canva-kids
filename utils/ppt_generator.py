@@ -1,17 +1,34 @@
 # 📁 utils/ppt_generator.py
 from pptx import Presentation
 from pptx.enum.text import MSO_AUTO_SIZE
+from pptx.dml.color import RGBColor
 
 def replace_text_preserve_style(text_frame, new_text):
     new_text = new_text.replace("\\n", "\n")
-    text_frame.clear()
-    lines = new_text.split("\n")
+    lines = [line.strip() for line in new_text.split("\n") if line.strip()]
     if not lines:
         return
-    text_frame.text = lines[0].strip()
-    for line in lines[1:]:
+
+    # 스타일 복사용 템플릿 문단 찾기
+    style_template = None
+    if text_frame.paragraphs:
+        style_template = text_frame.paragraphs[0]
+
+    text_frame.clear()
+
+    for line in lines:
         p = text_frame.add_paragraph()
-        p.text = line.strip()
+        p.text = line
+        if style_template and style_template.runs:
+            run = p.runs[0]
+            template_run = style_template.runs[0]
+            run.font.name = template_run.font.name
+            run.font.size = template_run.font.size
+            run.font.bold = template_run.font.bold
+            run.font.italic = template_run.font.italic
+            if template_run.font.color.type == 1:  # RGB
+                run.font.color.rgb = template_run.font.color.rgb
+
     text_frame.auto_size = MSO_AUTO_SIZE.TEXT_TO_FIT_SHAPE
 
 
