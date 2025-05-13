@@ -12,7 +12,7 @@ st.title("📄 PDF 세션 요약 → 🧑‍🏫 발표 PPT 자동 생성")
 pdf_file = st.file_uploader("🗂️ 세션 요약 PDF 업로드", type="pdf")
 prompt_input = st.text_area("✍️ GPT 요약 프롬프트", "금융 산업 종사자 대상 15분 발표용 PPT를 요약해주세요.")
 
-template_path = "templates/atd_template.pptx"
+template_path = "templates/atd_template.pptx.pptx"
 
 if st.button("🔄 슬라이드 생성 시작") and pdf_file:
     with tempfile.NamedTemporaryFile(delete=False) as tmp:
