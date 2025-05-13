@@ -39,6 +39,7 @@ if st.button("🔄 슬라이드 생성") and pdf_file:
 
     with st.spinner("🤖 GPT가 내용을 요약하고 있습니다..."):
         gpt_response = summarize_text_to_slides(pdf_text, prompt_input)
+        st.text_area("📋 GPT 응답 미리보기", gpt_response, height=400)
         slides_data = parse_structured_slides(gpt_response)
 
     with st.spinner("🧩 슬라이드에 내용 삽입 중..."):
