@@ -36,7 +36,7 @@ def parse_structured_slides(gpt_response):
                 if not title_en_global:
                     title_en_global = title_en
             elif line.startswith("내용:"):
-                content = line.replace("내용:", "").strip().replace(". ", ".\n")
+                content = line.replace("내용:", "").strip().replace("\\n", "\n")
             elif line.startswith("키워드:"):
                 keywords = line.replace("키워드:", "").strip()
         slides.append({
