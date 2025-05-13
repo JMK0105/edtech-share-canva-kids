@@ -1,18 +1,15 @@
 import openai
 import os
-from dotenv import load_dotenv
-load_dotenv()
 
-openai.api_key = os.getenv("OPENAI_API_KEY")  # 또는 직접 문자열로 삽입
+client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 def summarize_text(text, instruction):
-    messages = [
-        {"role": "system", "content": "당신은 발표 요약 전문가입니다."},
-        {"role": "user", "content": f"{instruction}\n\n{text}"}
-    ]
-    response = openai.ChatCompletion.create(
+    response = client.chat.completions.create(
         model="gpt-4",
-        messages=messages,
-        max_tokens=1600
+        messages=[
+            {"role": "system", "content": "당신은 발표용 자료 요약 전문가입니다."},
+            {"role": "user", "content": f"{instruction}\n\n{text}"}
+        ],
+        max_tokens=1500
     )
-    return response['choices'][0]['message']['content']
+    return response.choices[0].message.content
