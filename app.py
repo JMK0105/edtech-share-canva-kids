@@ -19,7 +19,7 @@ prompt_input = st.text_area("✍️ GPT 프롬프트", """
 - 첫 슬라이드에는 세션 개요를 키워드로 설정하고 내용에 세션의 목적, 핵심 화두, 전체 흐름을 간단히 요약해주세요.
 - 세션의 영어 제목과 그에 해당하는 자연스러운 한국어 제목 번역을 함께 제공해주세요.
 - 내용은 '핵심 메시지 + 의미 해석'의 흐름을 따르며, 실무자가 이해할 수 있는 깊이로 작성해주세요.
-- '영문 제목'과 '국문 제목'은 모든 슬라이드에서 동일합니다 (국문/영문 세션 제목).
+- '영문제목'과 '국문제목'은 모든 슬라이드에서 동일합니다 (국문/영문 세션 제목).
 - 각 슬라이드의 '키워드'는 해당 슬라이드의 주제를 소제목 형태로 작성해주세요. (예: ROI 방법론을 통한 단계별 목표수립 과정)
 - 마지막 슬라이드에는 국내 금융 산업에 종사하는 L&D 담당자가 참고할 만한 시사점을 정리해주세요.
 - 전략 수립, 프로그램 설계, 교육성과 보고 측면에서 실용적 인사이트를 제시해주세요.
@@ -28,30 +28,30 @@ prompt_input = st.text_area("✍️ GPT 프롬프트", """
 출력 형식 예시:
 
 [슬라이드 1]
-영문 제목: Demonstrate the Impact and ROI of Learning and Talent Development
-국문 제목: 학습, TD의 영향력 및 ROI 입증 방법
+영문제목: Demonstrate the Impact and ROI of Learning and Talent Development
+국문제목: 학습, TD의 영향력 및 ROI 입증 방법
 키워드: 세션 개요
 내용: ROI Instiute,lnc의 공동창립자이며 CEO이자 교육측정 및 평가분야에서 국제적으로 인정받는 리더이며, 교육 프로그램의 경제적 가치를 평가하는데 큰 기여를한 Patti P. Phillips의 세션
 
 [슬라이드 3]
-영문 제목: Demonstrate the Impact and ROI of Learning and Talent Development
-국문 제목: 학습, TD의 영향력 및 ROI 입증 방법
+영문제목: Demonstrate the Impact and ROI of Learning and Talent Development
+국문제목: 학습, TD의 영향력 및 ROI 입증 방법
 키워드: ROI 방법론을 통한 단계별 목표수립 과정
 내용: 각 단계별 교육 프로그램의 효과를 체계적으로 평가하고 명확한 데이터를 바탕으로 프로그램의 경제적 가치 입증 및 전략적 목표 달성에 기여
 
 [슬라이드 5]
-영문 제목: Demonstrate the Impact and ROI of Learning and Talent Development
-국문 제목: 학습, TD의 영향력 및 ROI 입증 방법
+영문제목: Demonstrate the Impact and ROI of Learning and Talent Development
+국문제목: 학습, TD의 영향력 및 ROI 입증 방법
 키워드: Phillips’ ROI Methodology (필립스의 ROI 방법론)
 내용: 교육 프로그램에 투입되는 비용을 실제 성과와 연결하여 교육의 금전적 실제 가치 즉, 투자수익률(R0I)을 확인하기 위한 방법론
 비생산적인, 수익률이 낮은 교육 프로그램을 예측하고 진행 여부를 결정하는데 도움이 됨.
 
 [슬라이드 6]
-영문 제목: Demonstrate the Impact and ROI of Learning and Talent Development
-국문 제목: 학습, TD의 영향력 및 ROI 입증 방법
+영문제목: Demonstrate the Impact and ROI of Learning and Talent Development
+국문제목: 학습, TD의 영향력 및 ROI 입증 방법
 키워드: 시사점
-- 기존에 평가 및 분석의 어려움으로 R0I 측정을 망설였다면 Phillips ROI 모델을 참고/적용하여 교육 프로그램을 기획/수행해 볼 것을 권함. 
-- 다만 ROI측정이 교육 효과성 평가의 만능이 될 수 없기 때문에 다양한평가 방법(설문조사, 시험, 직무 수행, 실습 평가)을 적절히 활용하여 비즈니스 성과를 높이고 조직의 성장과 발전을 이끌어 나갈 수 있는 교육을 기획할 수 있음.
+내용: 기존에 평가 및 분석의 어려움으로 R0I 측정을 망설였다면 Phillips ROI 모델을 참고/적용하여 교육 프로그램을 기획/수행해 볼 것을 권함. 
+다만 ROI측정이 교육 효과성 평가의 만능이 될 수 없기 때문에 다양한평가 방법(설문조사, 시험, 직무 수행, 실습 평가)을 적절히 활용하여 비즈니스 성과를 높이고 조직의 성장과 발전을 이끌어 나갈 수 있는 교육을 기획할 수 있음.
 """)
 
 if st.button("🔄 슬라이드 생성") and pdf_file:
