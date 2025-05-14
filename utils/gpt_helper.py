@@ -3,7 +3,7 @@ import openai
 import os
 
 # OpenAI 클라이언트 초기화
-client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+client = openai.api_key = st.secrets["OPENAI_API_KEY"]
 
 def summarize_text_to_slides(text, instruction):
     """
@@ -13,7 +13,7 @@ def summarize_text_to_slides(text, instruction):
         {"role": "system", "content": "당신은 교육 세션 자료를 기반으로 핵심 메시지, 적용 사례, 전략적 의미, 수치 근거를 구조화하여 설득력 있는 발표 슬라이드를 구성하는 전문가입니다."},
         {"role": "user", "content": f"{instruction}\n\n{text}"}
     ]
-    response = client.chat.completions.create(
+    response = openai.ChatCompletion.create(
         model="gpt-4",
         messages=messages,
         max_tokens=3000
