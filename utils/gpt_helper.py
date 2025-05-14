@@ -1,9 +1,10 @@
 # 📁 utils/gpt_helper.py
 import openai
 import os
+import streamlit as st
 
 # OpenAI 클라이언트 초기화
-client = openai.api_key = st.secrets["OPENAI_API_KEY"]
+openai.api_key = st.secrets["OPENAI_API_KEY"]
 
 def summarize_text_to_slides(text, instruction):
     """
