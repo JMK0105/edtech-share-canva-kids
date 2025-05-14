@@ -11,10 +11,10 @@ def summarize_text_to_slides(text, instruction):
     """
     messages = [
         {"role": "system", "content": "당신은 ATD25의 세션 자료를 기반으로 핵심 메시지, 적용 사례, 전략적 의미, 수치 근거를 구조화하여 설득력 있는 발표 슬라이드를 구성하는 HRD전문가입니다."},
-        {"role": "user", "content": f"{instruction}\n\n{text}"}
+        {"role": "user", "content": f"{instruction.strip()}\n\n{text.strip()}"}
     ]
     response = client.chat.completions.create(
-        model="gpt-4",
+        model="gpt-4-turbo",
         messages=messages,
         max_tokens=3000
     )
