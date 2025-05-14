@@ -39,12 +39,12 @@ def parse_structured_slides(gpt_response):
 
         for line in lines:
             line = line.strip()
-            if line.startswith("국문 제목:"):
-                title_kr = line.replace("국문 제목:", "").strip()
+            if line.startswith("국문제목:"):
+                title_kr = line.replace("국문제목:", "").strip()
                 if not title_kr_global:
                     title_kr_global = title_kr
-            elif line.startswith("영문 제목:"):
-                title_en = line.replace("영문 제목:", "").strip()
+            elif line.startswith("영문제목:"):
+                title_en = line.replace("영문제목:", "").strip()
                 if not title_en_global:
                     title_en_global = title_en
             elif line.startswith("키워드:"):
