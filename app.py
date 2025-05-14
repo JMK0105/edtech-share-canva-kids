@@ -36,26 +36,26 @@ prompt_input = st.text_area("✍️ GPT 프롬프트", """
 
 출력 형식 예시:
 
-(슬라이드 1)
+[슬라이드 1]
 영문 제목: Demonstrate the Impact and ROI of Learning and Talent Development
 국문 제목: 학습, TD의 영향력 및 ROI 입증 방법
 키워드: 세션 개요
 요약: ROI Instiute,lnc의 공동창립자이며 CEO이자 교육측정 및 평가분야에서 국제적으로 인정받는 리더이며, 교육 프로그램의 경제적 가치를 평가하는데 큰 기여를한 Patti P. Phillips의 세션
 
-(슬라이드 3)
+[슬라이드 3]
 영문 제목: Demonstrate the Impact and ROI of Learning and Talent Development
 국문 제목: 학습, TD의 영향력 및 ROI 입증 방법
 키워드: ROI 방법론을 통한 단계별 목표수립 과정
 내용: 각 단계별 교육 프로그램의 효과를 체계적으로 평가하고 명확한 데이터를 바탕으로 프로그램의 경제적 가치 입증 및 전략적 목표 달성에 기여
 
-(슬라이드 5)
+[슬라이드 5]
 영문 제목: Demonstrate the Impact and ROI of Learning and Talent Development
 국문 제목: 학습, TD의 영향력 및 ROI 입증 방법
 키워드: Phillips’ ROI Methodology (필립스의 ROI 방법론)
 내용: 교육 프로그램에 투입되는 비용을 실제 성과와 연결하여 교육의 금전적 실제 가치 즉, 투자수익률(R0I)을 확인하기 위한 방법론
 비생산적인, 수익률이 낮은 교육 프로그램을 예측하고 진행 여부를 결정하는데 도움이 됨.
 
-(슬라이드 6)
+[슬라이드 6]
 영문 제목: Demonstrate the Impact and ROI of Learning and Talent Development
 국문 제목: 학습, TD의 영향력 및 ROI 입증 방법
 키워드: 시사점
