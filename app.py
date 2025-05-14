@@ -36,12 +36,12 @@ prompt_input = st.text_area("✍️ GPT 프롬프트", """
 
 출력 형식 예시:
 
-[세션 개요]
+(슬라이드 1)
 영문 제목: Demonstrate the Impact and ROI of Learning and Talent Development
 국문 제목: 학습, TD의 영향력 및 ROI 입증 방법
+키워드: 세션 개요
 요약: ROI Instiute,lnc의 공동창립자이며 CEO이자 교육측정 및 평가분야에서 국제적으로 인정받는 리더이며, 교육 프로그램의 경제적 가치를 평가하는데 큰 기여를한 Patti P. Phillips의 세션
 
-[핵심 슬라이드 요약]
 (슬라이드 3)
 영문 제목: Demonstrate the Impact and ROI of Learning and Talent Development
 국문 제목: 학습, TD의 영향력 및 ROI 입증 방법
