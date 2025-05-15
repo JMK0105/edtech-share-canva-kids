@@ -3,7 +3,6 @@ from pptx.enum.text import MSO_AUTO_SIZE
 from pptx.dml.color import RGBColor
 from pptx.util import Pt
 
-
 def replace_text_preserve_style(text_frame, new_text):
     DEFAULT_FONT_NAME = "맑은 고딕"
     DEFAULT_FONT_SIZE = Pt(16)
@@ -29,7 +28,8 @@ def replace_text_preserve_style(text_frame, new_text):
     for i, line in enumerate(lines):
         # 첫 줄은 기존 paragraph 사용
         p = first_paragraph if i == 0 else text_frame.add_paragraph()
-        p.alignment = template_align or None
+        if template_align is not None:
+            p.alignment = template_align
         run = p.add_run()
         run.text = line
 
@@ -40,10 +40,7 @@ def replace_text_preserve_style(text_frame, new_text):
             run.font.bold = template_run.font.bold
             run.font.italic = template_run.font.italic
             try:
-                if template_run.font.color and template_run.font.color.type == 1:
-                    run.font.color.rgb = template_run.font.color.rgb
-                else:
-                    run.font.color.rgb = DEFAULT_FONT_COLOR
+                run.font.color.rgb = template_run.font.color.rgb or DEFAULT_FONT_COLOR
             except:
                 run.font.color.rgb = DEFAULT_FONT_COLOR
         else:
@@ -56,8 +53,6 @@ def replace_text_preserve_style(text_frame, new_text):
 
     text_frame.word_wrap = True
     text_frame.auto_size = MSO_AUTO_SIZE.TEXT_TO_FIT_SHAPE
-
-
 
 def insert_structured_content(template_path, structured_slides):
     """
@@ -74,6 +69,10 @@ def insert_structured_content(template_path, structured_slides):
         title_en = slide_data.get("title_en", "")
         content = slide_data.get("content", "")
         keywords = slide_data.get("keywords", "")
+
+        # 디버깅용 로그 (선택적)
+        if not any([title_kr, title_en, keywords, content]):
+            print(f"⚠️ 슬라이드 {i+1}에 입력된 값이 없습니다.")
 
         for shape in slide.shapes:
             if not shape.has_text_frame:
